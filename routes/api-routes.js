@@ -7,9 +7,10 @@ module.exports = function (app) {
 
     // GET route for getting all of the workouts
 
-    app.get("/api/workouts/", function (req, res) {
+    app.get("/api/workouts", function (req, res) {
         db.Workout.find({})
             .then(function (workouts) {
+                console.log('All workouts: ', workouts);
                 res.json(workouts);
             });
     });
@@ -53,12 +54,10 @@ module.exports = function (app) {
     // POST route for saving a new workout
 
     app.post("/api/workouts", function (req, res) {
-        console.log(req.body);
-        db.Workout.create({
-            date: req.body.date,
-            exercises: req.body.exlist,
-        })
+        console.log('Here is body: ', req.body);
+        db.Workout.create(req.body)
             .then(function (workout) {
+                console.log('New workout: ', workout);
                 res.json(workout);
             });
     });
@@ -67,10 +66,10 @@ module.exports = function (app) {
 
     // DELETE route for deleting workouts
 
-    app.delete("/api/workouts/:date", function (req, res) {
+    app.delete("/api/workouts/:id", function (req, res) {
         db.Workout.destroy({
             where: {
-                date: req.params.date
+                id: req.params.id
             }
         })
             .then(function (workout) {
@@ -82,9 +81,11 @@ module.exports = function (app) {
 
     // PUT route for updating workouts
 
-    app.put("/api/workouts/:date", function (req, res) {
+    app.put("/api/workouts/:id", function (req, res) {
         db.Workout.updateOne(
-            { where: { date: req.params.date } },
+            // { where: { id: req.params.id } },
+            { _id: req.params.id },
+
             {
                 $push:
                     { exercises: req.body }
