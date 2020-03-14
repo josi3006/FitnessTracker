@@ -13,15 +13,18 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/fitnesstracker", { useNewUrlParser: true });
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", { useNewUrlParser: true });
 
-require("./routes/apiRoutes")(app);
-require("./routes/htmlRoutes")(app);
+require("./routes/api-routes")(app);
+require("./routes/html-routes")(app);
 
 
 app.listen(PORT, () => {
-    console.log(`All systems go. Port: ${PORT}!`);
-  });
+    console.log('------------------------------');
+    console.log(`All systems go! Port: ${PORT}.`);
+    console.log('------------------------------');
+
+});
 
 
 

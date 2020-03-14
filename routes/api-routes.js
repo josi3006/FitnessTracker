@@ -1,5 +1,5 @@
 
-var db = require("../models");
+const db = require("../models");
 
 
 
@@ -8,11 +8,12 @@ module.exports = function (app) {
     // GET route for getting all of the workouts
 
     app.get("/api/workouts/", function (req, res) {
-        db.Workout.findAll({})
+        db.Workout.find({})
             .then(function (workouts) {
                 res.json(workouts);
             });
     });
+
 
 
 

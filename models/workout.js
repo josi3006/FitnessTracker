@@ -10,19 +10,18 @@ const WorkoutSchema = new Schema({
 
     exercises: [{
 
-        name: string,
-        extype: string,
-        weight: integer,
-        sets: integer,
-        reps: integer,
-        duration: integer
+        name: String,
+        extype: String,
+        weight: Number,
+        sets: Number,
+        reps: Number,
+        duration: Number
     }]
 
 });
 
 
+const Workout = mongoose.model("Workout", WorkoutSchema);
 
-
-const Workout = mongoose.model("Example", WorkoutSchema);
 
 module.exports = Workout;
