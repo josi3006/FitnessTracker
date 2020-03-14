@@ -11,26 +11,30 @@ const workoutSchema = new Schema({
     exercises: [{
 
         name: String,
-        extype: String,
+        type: {
+            type: String,
+        },
         weight: Number,
         sets: Number,
         reps: Number,
         duration: Number
     }],
 
-    totalDuration: Number
+    // totalDuration: Number
 
 });
 
 
-workoutSchema.methods.setTotalDuration = function () {
-    var total = 0;
-    for (var i = 0; i < this.exercises.length; i++) {
-        total += this.exercises[i].duration;
-    }
-    this.totalDuration = total;
-    return this.totalDuration;
-};
+
+
+// workoutSchema.methods.setTotalDuration = function() {
+//     let total = 0;
+//     for (i = 0; i < this.exercises.length; i++) {
+//         total += this.exercises[i].duration;
+//     }
+//     this.totalDuration = total;
+//     return this.totalDuration;
+// };
 
 
 const Workout = mongoose.model("Workout", workoutSchema);
