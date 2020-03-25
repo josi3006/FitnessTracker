@@ -10,8 +10,29 @@ module.exports = function (app) {
     app.get("/api/workouts", function (req, res) {
         db.Workout.find({})
             .then(function (workouts) {
-                console.log('All workouts: ', workouts);
+                for (const workout of workouts) {
+                    workout.setTotalDuration();
+                }
+                console.log('Here are the workouts: ');
                 res.json(workouts);
+            });
+    });
+
+
+
+    app.get("/api/workouts/range", (req, res) => {
+        db.Workout.find({})
+        .limit(7)
+        .sort({ day: -1})
+            .then(function (workouts) {
+                for (const workout of workouts) {
+                    workout.setTotalDuration();
+                }
+                console.log('Workouts within range: ');
+                res.json(workouts);
+            })
+            .catch(err => {
+                res.json(err);
             });
     });
 
@@ -37,16 +58,16 @@ module.exports = function (app) {
 
     // Get route for retrieving a single workout
 
-    app.get("/api/workouts/:id", function (req, res) {
-        db.Workout.findOne({
-            where: {
-                id: req.params.id
-            }
-        })
-            .then(function (workout) {
-                res.json(workout);
-            });
-    });
+    // app.get("/api/workouts/:id", function (req, res) {
+    //     db.Workout.findOne({
+    //         where: {
+    //             id: req.params.id
+    //         }
+    //     })
+    //         .then(function (workout) {
+    //             res.json(workout);
+    //         });
+    // });
 
 
 
@@ -57,7 +78,7 @@ module.exports = function (app) {
         console.log('Here is body: ', req.body);
         db.Workout.create(req.body)
             .then(function (workout) {
-                console.log('New workout: ', workout);
+                console.log('New workout is: ');
                 res.json(workout);
             });
     });
@@ -92,6 +113,7 @@ module.exports = function (app) {
             }
         )
             .then(function (workout) {
+                console.log('Successfully updated workout: ');
                 res.json(workout);
             })
     })

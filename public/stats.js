@@ -2,6 +2,8 @@
 
 fetch("/api/workouts/range")
   .then(response => {
+    console.log('I am in fetch!: ', response);
+
     return response.json();
   })
   .then(data => {
@@ -34,6 +36,7 @@ function generatePalette() {
   return arr;
 }
 function populateChart(data) {
+
   let durations = duration(data);
   let pounds = calculateTotalWeight(data);
   let workouts = workoutNames(data);
@@ -189,23 +192,24 @@ function populateChart(data) {
 function duration(data) {
 
   let durations = [];
-  let totalDuration = 0;
+  // let totalDuration = 0;
 
+  console.log('I am in the stats.js at 197');
 
   data.forEach(workout => {
 
-    totalDuration = 0;
+    // totalDuration = 0;
 
-    workout.exercise.forEach(exercise => {
+    workout.exercises.forEach(exercise => {
 
-      totalDuration = totalDuration + exercise.duration;
+      // totalDuration = totalDuration + exercise.duration;
 
       durations.push(exercise.duration);
 
 
     });
 
-    durations.push(totalDuration);
+    // durations.push(totalDuration);
 
   });
 
